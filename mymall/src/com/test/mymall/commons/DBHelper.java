@@ -2,6 +2,7 @@ package com.test.mymall.commons;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 
 import com.mysql.jdbc.Statement;
@@ -14,7 +15,7 @@ public class DBHelper {
 		return conn;
 	}
 	//객체 종료를 위한 공통메서드
-	public static void close(ResultSet rs ,Statement stmt, Connection conn) {
+	public static void close(ResultSet rs ,PreparedStatement stmt, Connection conn) {
 		if(rs != null) {
 			try {rs.close();} catch(Exception exception) {exception.printStackTrace();}
 		}

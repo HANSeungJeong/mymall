@@ -1,0 +1,22 @@
+10/18
+
+1. 메인페이지
+IndexController.doGet -> v.Index.jsp
+
+2. 회원가입폼
+AddMember.doGet -> v.addMember.jsp
+
+3. 회원가입액션
+Addmember.doPost -> m.MemberDao.insertMember() -> login
+
+10/25
+
+4.로그인 폼
+Login.doGet-> v.login.jsp
+
+5.로그인 액션
+Login.doGet-> m.MemberDao.login() -> success:c.index/ fail:c.login
+
+6.회원정보보기
+
+7.회원정보수

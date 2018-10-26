@@ -8,6 +8,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import com.test.mymall.dao.MemberDao;
+import com.test.mymall.vo.Member;
 
 
 @WebServlet("/AddMemberController")
@@ -26,6 +27,22 @@ public class AddMemberController extends HttpServlet {
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		System.out.println("AddMemberController.doPost()");
 		request.setCharacterEncoding("utf-8");
+		String id=request.getParameter("id");
+		String pw=request.getParameter("pw");
+		String level=request.getParameter("level");
+		
+		Member member=new Member();
+		member.setId(id);
+		member.setPw(pw);
+		member.setLevel(Integer.parseInt(level));
+		this.memberDao=new MemberDao();
+		
+		try {
+			this.memberDao.insertMember(member);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		response.sendRedirect(request.getContextPath()+"/login");
 	}
 
 }
