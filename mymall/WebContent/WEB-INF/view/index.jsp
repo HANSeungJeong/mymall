@@ -3,12 +3,12 @@
 <!DOCTYPE html>
 <html>
 <head>
-<meta charset="EUC-KR">
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
 <title>Insert title here</title>
 </head>
 <body>
 	<h1>index</h1>
-	<a href="${pageContext.request.contextPath}/AddMember"></a>
+	<a href="${pageContext.request.contextPath}/AddMemberController">회원가입</a>
 
 </body>
 </html>
