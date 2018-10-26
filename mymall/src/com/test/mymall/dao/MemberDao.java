@@ -1,9 +1,12 @@
 package com.test.mymall.dao;
 
-import com.test.mymall.vo.Member;
+import java.sql.*;
+import javax.naming.*;
+
 
 public class MemberDao {
-	public void insertMember(Member member) {
-		
-	}
+	
+	
+    
+    
 }
