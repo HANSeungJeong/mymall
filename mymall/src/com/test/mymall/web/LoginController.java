@@ -6,38 +6,39 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import com.test.mymall.dao.MemberDao;
-import com.test.mymall.service.MemberService;
 import com.test.mymall.vo.Member;
 
 
-@WebServlet("/AddMemberController")
-public class AddMemberController extends HttpServlet {
-	//1. 라우터 역활.
-	//2. 모델이 생성되도록 호출.
-	//3. view rendering.
+
+@WebServlet("/LoginController")
+public class LoginController extends HttpServlet {
 	private MemberDao memberDao;
-	
-	//회원가입 폼
+       
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		System.out.println("AddMemberController.doGet()");
-		request.getRequestDispatcher("/WEB-INF/view/addMember/jsp").forward(request,response);
+		System.out.println("LoginController doPost()");
+		request.getRequestDispatcher("/WEB-INF/view/login.jsp").forward(request, response);
 	}
-	//회원가입 액션
+
+
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		System.out.println("AddMemberController.doPost()");
+		//1.ID,PASSWORD
+		System.out.println("LoginController doPost()");
 		request.setCharacterEncoding("utf-8");
+		// id와 pw를 가져옴
 		String id = request.getParameter("id");
 		String pw = request.getParameter("pw");
-		String level = request.getParameter("level");
-		Member member = new Member();
-		member.setId(id);
-		member.setPw(pw);
-		member.setLevel(Integer.parseInt(level));
 		this.memberDao = new MemberDao();
-		this.memberDao.insertMember(member);
-		response.sendRedirect(request.getContextPath()+"/LoginController");
+		Member member = this.memberDao.login(id, pw);
+		if(member!=null) {
+			HttpSession session=request.getSession();
+			session.setAttribute("loginMember", member);
+			response.sendRedirect(request.getContextPath()+"/IndexController");
+		} else {
+			response.sendRedirect(request.getContextPath()+"/LoginController");
+		}
 		
 	}
 
