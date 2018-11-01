@@ -1,8 +1,8 @@
 package com.test.mymall.service;
 
+import java.sql.Connection;
 import java.sql.SQLException;
 
-import com.mysql.jdbc.Connection;
 import com.test.mymall.commons.DBHelper;
 import com.test.mymall.dao.MemberDao;
 import com.test.mymall.dao.MemberItemDao;
@@ -23,7 +23,7 @@ public class MemberService {
 		memberDao.deleteMember(no);
 		//2 function
 		memberItemDao = new MemberItemDao();
-		memberItemDao.deleteMemberItem(no);
+		memberItemDao.deleteMemberItem(conn, no);
 		conn.commit();
 		} catch(Exception e) {
 			try {

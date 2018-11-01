@@ -45,17 +45,18 @@ public class MemberDao {
     	Connection conn = null;
     	PreparedStatement stmt = null;
     	ResultSet rs = null;
-    } try {
-    	conn = DBHelper.getConnection();
-    	stmt=conn.prepareStatement("INSERT INTO mall.member(id, pw, level) VALUES (?, ?, ?)");
-    	stmt.setString(1, member.getId());
-		stmt.setString(2, member.getPw());
-		stmt.setInt(3, member.getLevel());
-		stmt.executeUpdate();
-    } catch(Exception e) {
-    	e.printStackTrace();
-    } finally {
-    	DBHelper.close(rs, stmt, conn);
-    }
+	     try {
+	    	conn = DBHelper.getConnection();
+	    	stmt=conn.prepareStatement("INSERT INTO mall.member(id, pw, level) VALUES (?, ?, ?)");
+	    	stmt.setString(1, member.getId());
+			stmt.setString(2, member.getPw());
+			stmt.setInt(3, member.getLevel());
+			stmt.executeUpdate();
+	    } catch(Exception e) {
+	    	e.printStackTrace();
+	    } finally {
+	    	DBHelper.close(rs, stmt, conn);
+	    }
     
+    }
 }

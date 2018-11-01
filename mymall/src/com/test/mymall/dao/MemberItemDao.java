@@ -23,14 +23,14 @@ public class MemberItemDao {
 			from member_item mi inner join item
 			on mi.item_no = i.no
 			where mi.member_no = ?
-		 */
+		 
 		while(rs.next()) {
 			HashMap<String, Object> map = new HashMap<String, Object>();
 			map.put("memberItemNo", rs.getInt("mi.no"));
 			map.put("itemPrice", rs.getInt("i.price"));
 			list.add(map);
 		}
-		
+		*/
 		return list;
 	}
 }
