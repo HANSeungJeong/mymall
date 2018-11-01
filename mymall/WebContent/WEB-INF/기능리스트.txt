@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 ::: 11/1 오전 :::
 1.session에 로그인 정보 수정
 2.주문
@@ -5,3 +6,27 @@
 
 ::: 11/1 오후 :::
 1.service계층 사용 : 트랜잭션처리 회원삭제->주문삭제
+=======
+10/18
+
+1. 메인페이지
+IndexController.doGet -> v.Index.jsp
+
+2. 회원가입폼
+AddMember.doGet -> v.addMember.jsp
+
+3. 회원가입액션
+Addmember.doPost -> m.MemberDao.insertMember() -> login
+
+10/25
+
+4.로그인 폼
+Login.doGet-> v.login.jsp
+
+5.로그인 액션
+Login.doGet-> m.MemberDao.login() -> success:c.index/ fail:c.login
+
+6.회원정보보기
+
+7.회원정보수
+>>>>>>> refs/remotes/origin/master
