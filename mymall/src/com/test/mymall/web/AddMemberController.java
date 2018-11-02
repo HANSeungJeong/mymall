@@ -7,7 +7,6 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import com.test.mymall.dao.MemberDao;
 import com.test.mymall.service.MemberService;
 import com.test.mymall.vo.Member;
 
@@ -17,7 +16,7 @@ public class AddMemberController extends HttpServlet {
 	//1. 라우터 역활.
 	//2. 모델이 생성되도록 호출.
 	//3. view rendering.
-	private MemberDao memberDao;
+	private MemberService memberService;
 	
 	//회원가입 폼
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
@@ -35,8 +34,8 @@ public class AddMemberController extends HttpServlet {
 		member.setId(id);
 		member.setPw(pw);
 		member.setLevel(Integer.parseInt(level));
-		this.memberDao = new MemberDao();
-		this.memberDao.insertMember(member);
+		this.memberService = new MemberService();
+		this.memberService.addMember(member);
 		response.sendRedirect(request.getContextPath()+"/LoginController");
 		
 	}

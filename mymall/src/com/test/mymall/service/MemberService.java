@@ -9,6 +9,7 @@ import com.test.mymall.dao.MemberItemDao;
 import com.test.mymall.vo.Member;
 
 public class MemberService {
+	
 	private MemberDao memberDao;
 	private MemberItemDao memberItemDao;
 	
@@ -16,28 +17,54 @@ public class MemberService {
 	public void removeMember(int no) {
 		Connection conn = null;
 		try {
-		conn = DBHelper.getConnection();
-		conn.setAutoCommit(false);	//자동 commit 되지 않는다.
-		//1 function
-		memberDao = new MemberDao();
-		memberDao.deleteMember(no);
-		//2 function
-		memberItemDao = new MemberItemDao();
-		memberItemDao.deleteMemberItem(conn, no);
-		conn.commit();
+			conn = DBHelper.getConnection();
+			conn.setAutoCommit(false);	//자동 commit 되지 않는다.
+			//1 function
+			memberItemDao = new MemberItemDao();
+			memberItemDao.deleteMemberItem(conn, no);
+			//2 function
+			memberDao = new MemberDao();
+			memberDao.deleteMember(conn, no);
+			conn.commit();
 		} catch(Exception e) {
-			try {
-				conn.rollback();
-			} catch(SQLException e1){
+				try {
+					conn.rollback();
+				} catch(SQLException e1){
+					e1.printStackTrace();
+				} 
 			e.printStackTrace();
 		} finally {
 			DBHelper.close(null, null, conn);
 		}
-		}
 	}
-	
+	//로그인 처리 서비스
+	public Member login(Member member) {
+		System.out.println("MemberService.login");
+		Connection conn = null;
+		Member resultMember = null;
+		try {
+			conn=DBHelper.getConnection();
+			memberDao = new MemberDao();
+			resultMember = memberDao.login(conn, member);
+		} catch(Exception e) {
+			e.printStackTrace();
+	} finally {
+		DBHelper.close(null, null, conn);
+	}
+		return resultMember;
+	}
+	//회원가입 입력처리 서비스
 	public void addMember(Member member) {
-		memberDao = new MemberDao();
-		memberDao.insertMember(member);
+		System.out.println("MemberService addMember");
+		Connection conn = null;
+		try {
+			conn = DBHelper.getConnection();
+			memberDao = new MemberDao();
+			memberDao.insertMember(null, member);
+		} catch(Exception e) {
+			e.printStackTrace();
+		} finally {
+			DBHelper.close(null, null, conn);
+		}
 	}
 }
