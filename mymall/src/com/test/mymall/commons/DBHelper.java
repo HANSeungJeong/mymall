@@ -1,28 +1,32 @@
 package com.test.mymall.commons;
 
+import java.io.IOException;
+import java.io.InputStream;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.Statement;
+
+import org.apache.ibatis.io.Resources;
+import org.apache.ibatis.session.SqlSession;
+import org.apache.ibatis.session.SqlSessionFactory;
+import org.apache.ibatis.session.SqlSessionFactoryBuilder;
+
 import java.sql.ResultSet;
 
 public class DBHelper {
-	public static Connection getConnection() throws Exception{
-		Connection conn=null;
-		Class.forName("com.mysql.jdbc.Driver");
-		conn=DriverManager.getConnection("jdbc:mysql://localhost:3306/mall?useUnicode=true&characterEncoding=utf8", "root", "java0000");
-		return conn;
+	public static SqlSession getsqlSession() throws Exception{
+		InputStream inputStream = null; 
+		  try {
+		   String resource = "mybatis-config.xml";
+		   inputStream = Resources.getResourceAsStream(resource);
+		  } catch (IOException e) {
+		   e.printStackTrace();
+		  }
+		  
+		  SqlSessionFactory sqlSessionFactory= new SqlSessionFactoryBuilder().build(inputStream); 
+		  SqlSession sqlSession = sqlSessionFactory.openSession();
+		  
+		  return sqlSession;
+		 }
 	}
-	//객체 종료를 위한 공통메서드
-	public static void close(ResultSet rs ,Statement stmt, Connection conn) {
-		if(rs != null) {
-			try {rs.close();} catch(Exception exception) {exception.printStackTrace();}
-		}
-		if(stmt != null) {
-			try {stmt.close();} catch(Exception exception) {exception.printStackTrace();}
-		}
-		if(conn != null) {
-			try {conn.close();} catch(Exception exception) {exception.printStackTrace();}
-		}
-	}
-	
-}
+

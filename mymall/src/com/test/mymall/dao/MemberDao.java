@@ -9,36 +9,6 @@ import com.test.mymall.vo.Member;
 
 public class MemberDao {
 
-	//상품 리스트 처리
-	public void selectItemList (int startRow, int rowPerPage) {
-		System.out.println("MemberDao selectItemList");
-		Connection conn = null;
-		PreparedStatement stmt = null;
-		ResultSet rs = null;
-	}
-	
-	//상품 총 갯수
-	public int selectItemListCount() {
-		System.out.println("MemberDao selectItemListCount");
-		Connection conn = null;
-		PreparedStatement stmt = null;
-		ResultSet rs = null;
-		
-		int itemRowCount = 0;
-		
-		try {
-			conn=DBHelper.getConnection();
-			stmt=conn.prepareStatement("SELECT COUNT(*) FROM mall.item");
-			if(rs.next()) {
-				itemRowCount=rs.getInt(1);
-			}
-		}catch(Exception e) {
-			e.printStackTrace();
-		}finally {
-			DBHelper.close(rs, stmt, conn);
-		}
-		return itemRowCount;
-	}
 	
 	// 로그인 실패시 -> null
 	// 로그인 성공시 -> 성공한 Member객체
@@ -57,8 +27,7 @@ public class MemberDao {
      			member.setPw(rs.getString("pw"));
      			member.setLevel(rs.getInt("level"));
      		}
-     		stmt.close();
-     		rs.close();
+ 		DBHelper.close(rs, stmt, null);
  		return resultmember;
 	}
 	//회원탈퇴 처리
@@ -77,8 +46,7 @@ public class MemberDao {
 			stmt.setString(2, member.getPw());
 			stmt.setInt(3, member.getLevel());
 			stmt.executeUpdate();
-	  
-			stmt.close();
+		DBHelper.close(null, stmt, null);
 	    }
     
     }

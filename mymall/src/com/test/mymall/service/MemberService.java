@@ -3,6 +3,8 @@ package com.test.mymall.service;
 import java.sql.Connection;
 import java.sql.SQLException;
 
+import org.apache.ibatis.session.SqlSession;
+
 import com.test.mymall.commons.DBHelper;
 import com.test.mymall.dao.MemberDao;
 import com.test.mymall.dao.MemberItemDao;
@@ -15,10 +17,10 @@ public class MemberService {
 	
 	// RemoveMemberController에서  MemberService.removeMember()호출
 	public void removeMember(int no) {
-		Connection conn = null;
+		SqlSession sqlSession;
 		try {
-			conn = DBHelper.getConnection();
-			conn.setAutoCommit(false);	//자동 commit 되지 않는다.
+			sqlSession = DBHelper.getsqlSession();
+			sqlSession.setAutoCommit(false);	//자동 commit 되지 않는다.
 			//1 function
 			memberItemDao = new MemberItemDao();
 			memberItemDao.deleteMemberItem(conn, no);
@@ -28,13 +30,13 @@ public class MemberService {
 			conn.commit();
 		} catch(Exception e) {
 				try {
-					conn.rollback();
+					sqlSession.rollback();
 				} catch(SQLException e1){
 					e1.printStackTrace();
 				} 
 			e.printStackTrace();
 		} finally {
-			DBHelper.close(null, null, conn);
+			sqlSession.close(null, null, conn);
 		}
 	}
 	//로그인 처리 서비스
@@ -44,8 +46,8 @@ public class MemberService {
 		Member resultMember = null;
 		try {
 			conn=DBHelper.getConnection();
-			memberDao = new MemberDao();
-			resultMember = memberDao.login(conn, member);
+			this.memberDao = new MemberDao();
+			resultMember = this.memberDao.login(conn, member);
 		} catch(Exception e) {
 			e.printStackTrace();
 	} finally {
@@ -59,8 +61,8 @@ public class MemberService {
 		Connection conn = null;
 		try {
 			conn = DBHelper.getConnection();
-			memberDao = new MemberDao();
-			memberDao.insertMember(null, member);
+			this.memberDao = new MemberDao();
+			this.memberDao.insertMember(null, member);
 		} catch(Exception e) {
 			e.printStackTrace();
 		} finally {
