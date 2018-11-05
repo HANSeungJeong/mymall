@@ -2,6 +2,9 @@ package com.test.mymall.dao;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+
+import com.test.mymall.vo.MemberItem;
+
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -33,4 +36,12 @@ public class MemberItemDao {
 		*/
 		return list;
 	}
+	public void insertMemberItem(Connection conn, MemberItem memberitem) throws SQLException {
+		System.out.println("MemberItemDao insertMemberItem");
+		PreparedStatement stmt=null;
+		stmt=conn.prepareStatement("INSERT INTO mall.member_item(member_no, item_no, order_date) VALUES (?, ?, now())");
+		stmt.setInt(1, memberitem.getMemberNo());
+		stmt.setInt(2, memberitem.getItemNo());
+		stmt.executeUpdate();
+}
 }
