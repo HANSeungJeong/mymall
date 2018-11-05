@@ -2,6 +2,9 @@ package com.test.mymall.dao;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
+
+import org.apache.ibatis.session.SqlSession;
 
 import com.test.mymall.vo.MemberItem;
 
@@ -12,36 +15,24 @@ import java.sql.SQLException;
 
 
 public class MemberItemDao {
-	public void deleteMemberItem(Connection conn, int no) throws SQLException {
-		PreparedStatement stmt = conn.prepareStatement("");
+	public void deleteMemberItem(SqlSession sqlSession, int no){
 	}
-	
+	//주문리스트처리
 	//Member INNER JOIN item
-	public ArrayList<HashMap<String, Object>> getMemberItemList(int memberNO) {
-		Connection conn;
-		ArrayList<HashMap<String,Object>> list = new ArrayList<HashMap<String,Object>>();
-		String sql ="";
-		/*
-		 * select mi.no, mi.order_date, mi.item_no, i.name, i.price
-			from member_item mi inner join item
-			on mi.item_no = i.no
-			where mi.member_no = ?
-		 
-		while(rs.next()) {
-			HashMap<String, Object> map = new HashMap<String, Object>();
-			map.put("memberItemNo", rs.getInt("mi.no"));
-			map.put("itemPrice", rs.getInt("i.price"));
-			list.add(map);
-		}
-		*/
-		return list;
+	public List<HashMap<String, Object>> selectMemberList(SqlSession sqlSession, int MemberNo){
+		System.out.println("MemberItemDao selectMemberList");
+		return sqlSession.selectList("com.test.mymall.dao.MemberItemMapper.selectMemberList");
+		
 	}
-	public void insertMemberItem(Connection conn, MemberItem memberitem) throws SQLException {
+	//주문 갯수
+	public int selectMemberItemListCount(SqlSession sqlSession, int MemberNo) {
+		System.out.println("MemberItemDao selectMemberItemListCount");
+		return sqlSession.selectOne("com.test.mymall.dao.MemberItemMapper.selectMemberItemListCount", MemberNo);
+		
+	}
+	//주문처리
+	public void insertMemberItem(SqlSession sqlSession, MemberItem memberitem){
 		System.out.println("MemberItemDao insertMemberItem");
-		PreparedStatement stmt=null;
-		stmt=conn.prepareStatement("INSERT INTO mall.member_item(member_no, item_no, order_date) VALUES (?, ?, now())");
-		stmt.setInt(1, memberitem.getMemberNo());
-		stmt.setInt(2, memberitem.getItemNo());
-		stmt.executeUpdate();
-}
+		sqlSession.insert("com.test.mymall.dao.MemberItemMapper.insertMemberItem", memberitem);
+	}
 }

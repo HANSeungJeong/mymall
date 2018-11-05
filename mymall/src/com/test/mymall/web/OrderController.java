@@ -23,12 +23,13 @@ public class OrderController extends HttpServlet {
 		int memberNo = member.getNo();
 		//MemberItemDao.insertMember
 		int itemNo=Integer.parseInt(request.getParameter("itemNo"));
-		System.out.println("OrderController doGet()"+memberNo);
-		System.out.println("OrderController doGet()"+itemNo);
+		
 		MemberItem memberItem = new MemberItem();
 		memberItem.setMemberNo(memberNo);
 		memberItem.setItemNo(itemNo);
+		
 		this.memberItemService = new MemberItemService();
+		this.memberItemService.insertMemberItem(memberItem);
 		response.sendRedirect(request.getContextPath()+"/IndexController");
 	}
 

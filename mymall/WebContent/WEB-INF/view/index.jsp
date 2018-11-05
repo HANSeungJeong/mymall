@@ -13,12 +13,14 @@
 			${loginMember.id} 관리자님 이 들어왔습니다. <br>
 			<a href="${pageContext.request.contextPath}/LogoutController">LogOut</a>
 			<a href="${pageContext.request.contextPath}/ItemListController">상품목록</a>
+			<a href="${pageContext.request.contextPath}/OrderListController">주문목록</a>
 		</c:if>
 		
 		<c:if test="${loginMember.level==1}">
 		${loginMember.id} 고객분 께서 들어왔습니다. <br>
 		<a href="${pageContext.request.contextPath}/LogoutController">LogOut</a>
 		<a href="${pageContext.request.contextPath}/ItemListController">상품목록</a>
+		<a href="${pageContext.request.contextPath}/OrderListController">주문목록</a>
 		</c:if>
 		
 		<c:if test="${loginMember.level==null}">

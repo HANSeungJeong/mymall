@@ -21,7 +21,7 @@ public class ItemDao {
 	}
 	
 	//상품 총 갯수
-	public int selectItemListCount(SqlSession sqlSession) throws SQLException {
+	public int selectItemListCount(SqlSession sqlSession) {
 		System.out.println("ItemDao selectItemListCount");
 	
 		return sqlSession.selectOne("com.test.mymall.dao.ItemMapper.selectItemCount");

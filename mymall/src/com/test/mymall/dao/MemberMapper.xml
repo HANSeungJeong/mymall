@@ -10,12 +10,7 @@
 	</select>
 	<select id="selectMemberOnew" resultType="int">
 		SELECT 
-			no as no
-		 FROM member WHERE no=#{no}
+			no, id, pw, level
+		 FROM member WHERE id=#{id} AND pw=#{pw}
 	</select>
-	<insert id="insertMember" parameterType="com.test.mymall.vo.Member">
-		INSERT INTO member
-			(no, id) 
-		VALUES #{no}, #{id}
-	</insert>
 </mapper>
